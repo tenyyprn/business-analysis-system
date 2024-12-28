@@ -1,0 +1,280 @@
+{
+  "server": {
+    "port": 3000,
+    "host": "localhost",
+    "timeout": 30000,
+    "maxRequestSize": "10mb"
+  },
+  "analysis": {
+    "defaultLanguage": "ja",
+    "queryPatterns": {
+      "profitability": {
+        "patterns": [
+          "収益性",
+          "利益率",
+          "収益",
+          "儲け",
+          "もうけ",
+          "利益",
+          "粗利",
+          "営業利益",
+          "経常利益",
+          "当期利益",
+          "利益率はどうですか",
+          "収益状況",
+          "収益性分析"
+        ],
+        "response": {
+          "template": "【収益性分析結果】\n\n${summary}\n\n■ 詳細指標\n▼ 収益性指標\n・営業利益率: ${metrics.operatingProfitMargin}%\n・純利益率: ${metrics.netProfitMargin}%\n・ROI: ${metrics.roi}%\n\n▼ 前年同期比\n・営業利益: ${metrics.yearOverYear.operating}%\n・純利益: ${metrics.yearOverYear.net}%\n\n▼ 業界平均との比較\n・営業利益率差異: ${metrics.industryComparison.operatingMargin}%\n・ROI差異: ${metrics.industryComparison.roi}%"
+        }
+      },
+      "growth": {
+        "patterns": [
+          "成長性",
+          "成長率",
+          "伸び",
+          "成長",
+          "発展",
+          "売上成長",
+          "事業拡大",
+          "市場シェア",
+          "売上推移",
+          "業績推移",
+          "成長性分析",
+          "売上はどうですか",
+          "業績の伸び"
+        ],
+        "response": {
+          "template": "【成長性分析結果】\n\n${summary}\n\n■ 詳細指標\n▼ 成長率\n・売上成長率: ${metrics.revenueGrowth}%\n・利益成長率: ${metrics.profitGrowth}%\n・市場シェア成長率: ${metrics.marketShareGrowth}%\n\n▼ 四半期比較\n・前四半期比: ${metrics.quarterOverQuarter}%\n・前年同四半期比: ${metrics.yearOverYearQuarter}%\n\n▼ 市場予測\n・来期予想成長率: ${metrics.forecast.nextQuarter}%\n・年間予想成長率: ${metrics.forecast.annual}%"
+        }
+      },
+      "efficiency": {
+        "patterns": [
+          "効率性",
+          "効率",
+          "回転率",
+          "生産性",
+          "コスト効率",
+          "運営効率",
+          "資産効率",
+          "在庫回転",
+          "経営効率",
+          "効率性分析",
+          "コスト削減",
+          "業務効率"
+        ],
+        "response": {
+          "template": "【効率性分析結果】\n\n${summary}\n\n■ 詳細指標\n▼ 運営効率\n・資産回転率: ${metrics.assetTurnover}回\n・在庫回転率: ${metrics.inventoryTurnover}回\n・売掛金回転率: ${metrics.receivablesTurnover}回\n\n▼ コスト効率\n・売上原価率: ${metrics.costOfSales}%\n・販管費率: ${metrics.sga}%\n・営業経費率: ${metrics.operatingExpenses}%\n\n▼ 生産性指標\n・従業員一人当たり売上: ${metrics.revenuePerEmployee}円\n・従業員一人当たり利益: ${metrics.profitPerEmployee}円"
+        }
+      },
+      "comprehensive": {
+        "patterns": [
+          "総合分析",
+          "総合的",
+          "全体",
+          "経営状態",
+          "経営分析",
+          "財務分析",
+          "業績分析",
+          "現状分析",
+          "経営状況",
+          "全体像",
+          "総合的な分析"
+        ],
+        "response": {
+          "template": "【総合経営分析結果】\n\n${summary}\n\n■ 主要指標サマリー\n▼ 収益性\n・営業利益率: ${metrics.operatingProfitMargin}%\n・ROI: ${metrics.roi}%\n\n▼ 成長性\n・売上成長率: ${metrics.revenueGrowth}%\n・市場シェア: ${metrics.marketShare}%\n\n▼ 効率性\n・資産回転率: ${metrics.assetTurnover}回\n・コスト効率: ${metrics.costEfficiency}%\n\n■ 総合評価\n${evaluation}\n\n■ 改善提案\n${recommendations}"
+        }
+      }
+    },
+    "thresholds": {
+      "profitability": {
+        "excellent": 20,
+        "good": 15,
+        "warning": 5,
+        "critical": 0
+      },
+      "growth": {
+        "excellent": 20,
+        "good": 10,
+        "warning": 0,
+        "critical": -5
+      },
+      "efficiency": {
+        "assetTurnover": {
+          "excellent": 2.5,
+          "good": 2.0,
+          "warning": 1.5,
+          "critical": 1.0
+        },
+        "inventoryTurnover": {
+          "excellent": 8.0,
+          "good": 6.0,
+          "warning": 4.0,
+          "critical": 2.0
+        },
+        "receivablesTurnover": {
+          "excellent": 12.0,
+          "good": 8.0,
+          "warning": 6.0,
+          "critical": 4.0
+        }
+      }
+    },
+    "benchmarks": {
+      "industry": {
+        "operatingProfitMargin": 12.5,
+        "netProfitMargin": 8.0,
+        "roi": 15.0,
+        "marketShare": 10.0
+      }
+    }
+  },
+  "reporting": {
+    "outputFormat": ["text", "json", "csv", "pdf"],
+    "dateFormat": "YYYY-MM-DD",
+    "decimalPlaces": 2,
+    "currency": "JPY",
+    "templates": {
+      "summary": {
+        "title": "経営状態サマリー",
+        "sections": [
+          "重要指標ハイライト",
+          "前年比較分析",
+          "業界平均比較",
+          "リスク要因分析"
+        ]
+      },
+      "detailed": {
+        "title": "詳細分析レポート",
+        "sections": [
+          "財務指標の総合分析",
+          "セグメント別分析",
+          "市場環境分析",
+          "競合分析",
+          "将来予測",
+          "アクションプラン"
+        ]
+      }
+    }
+  },
+  "nlp": {
+    "preprocessing": {
+      "normalizeFullWidth": true,
+      "removeSpaces": true,
+      "toLowerCase": true,
+      "removeSpecialCharacters": true
+    },
+    "synonyms": {
+      "収益": ["利益", "儲け", "もうけ", "収入", "売上", "営業利益", "経常利益", "純利益", "粗利"],
+      "成長": ["発展", "伸び", "拡大", "向上", "アップ", "増加", "上昇"],
+      "効率": ["生産性", "回転率", "効率性", "コスト効率", "経営効率", "業務効率"],
+      "トレンド": ["傾向", "推移", "動向", "変化", "流れ", "経過", "状況"],
+      "分析": ["解析", "調査", "確認", "チェック", "診断", "評価"]
+    },
+    "contextualUnderstanding": {
+      "timeReferences": {
+        "今期": "currentQuarter",
+        "前期": "previousQuarter",
+        "来期": "nextQuarter",
+        "今年": "currentYear",
+        "昨年": "previousYear",
+        "来年": "nextYear"
+      },
+      "comparisonTypes": {
+        "前年比": "yearOverYear",
+        "前期比": "quarterOverQuarter",
+        "業界平均": "industryAverage",
+        "市場平均": "marketAverage"
+      }
+    },
+    "responseTemplates": {
+      "error": {
+        "general": "申し訳ありません。分析中にエラーが発生しました。",
+        "noData": "該当するデータが見つかりませんでした。",
+        "invalidQuery": "質問の意図を理解できませんでした。",
+        "missingContext": "より具体的な情報が必要です。"
+      },
+      "success": {
+        "analysis": "分析が完了しました。",
+        "update": "データを更新しました。",
+        "comparison": "比較分析が完了しました。"
+      },
+      "clarification": {
+        "timeframe": "分析期間を指定してください。",
+        "metric": "具体的な指標を指定してください。",
+        "scope": "分析範囲を明確にしてください。"
+      }
+    }
+  },
+  "visualization": {
+    "enabled": true,
+    "charts": {
+      "types": {
+        "timeSeries": "line",
+        "comparison": "bar",
+        "distribution": "pie",
+        "correlation": "scatter"
+      },
+      "colors": {
+        "primary": {
+          "positive": "#36B37E",
+          "negative": "#FF5630",
+          "neutral": "#4C9AFF"
+        },
+        "secondary": {
+          "positive": "#00875A",
+          "negative": "#DE350B",
+          "neutral": "#0052CC"
+        },
+        "background": "#FFFFFF",
+        "grid": "#F4F5F7"
+      },
+      "defaults": {
+        "dimensions": {
+          "width": 800,
+          "height": 400,
+          "margin": {
+            "top": 20,
+            "right": 30,
+            "bottom": 40,
+            "left": 50
+          }
+        },
+        "typography": {
+          "fontFamily": "Arial, Helvetica, sans-serif",
+          "fontSize": {
+            "title": 16,
+            "axis": 12,
+            "label": 10
+          }
+        },
+        "animation": {
+          "enabled": true,
+          "duration": 500
+        }
+      }
+    },
+    "exportFormats": ["png", "svg", "pdf"]
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "rotation": {
+      "enabled": true,
+      "maxSize": "10mb",
+      "maxFiles": 5
+    },
+    "categories": {
+      "analysis": "./logs/analysis.log",
+      "query": "./logs/query.log",
+      "error": "./logs/error.log",
+      "performance": "./logs/performance.log"
+    }
+  },
+  "cache": {
+    "enabled": true,
+    "type": "memory",
+    "ttl": 3600,
+    "maxSize": "100mb"
+  }
+}
